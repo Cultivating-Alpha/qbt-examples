@@ -11,6 +11,9 @@ quantbt = "^0.8.9"
 quantstats = "^0.0.62"
 
 
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.26.0"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
