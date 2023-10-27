@@ -1,9 +1,9 @@
 import quantbt as qbt
+import pandas as pd
+from quantbt.core.enums import TradeMode
 
 data = qbt.data.random_data(seed=300)[0]
 print(data)
-
-# |%%--%%| <Ufsl8mlq0u|sER6Ds1yb6>
 
 import quantbt.indicators as ind
 from quantbt.strategies.S_base import S_base
@@ -31,12 +31,11 @@ strategy_settings = {
     "initial_capital": 100_000,
     "commission": 1.2,
     "commission_type": CommissionType.FIXED,
-    "multiplier": 4,
+    "multiplier": 20,
     "data_type": DataType.OHLC,
     "default_trade_size": 1,
     "trade_size_type": TradeSizeType.FIXED,
 }
-# |%%--%%| <sER6Ds1yb6|WYW5Ijm2uh>
 
 
 """
@@ -44,15 +43,18 @@ This is how we actually backtest the strategy.
 We only need to set the parameters which will be automatically passed to the st.generate_signals() function
 """
 st = MyStrategy(data, **strategy_settings)
-st.set_backtester_settings()
+st.set_backtester_settings(
+    use_trailing_sl=False, one_trade_per_direction=False, trade_mode=TradeMode.HEDGE
+)
 
-params = (5, 23)
+params = (49, 44)
 st.from_signals(params)
 
 # |%%--%%| <WYW5Ijm2uh|dcbhkIt8T2>
 
 stats = st.get_stats()
 print(stats)
+
 
 # |%%--%%| <dcbhkIt8T2|Ap4AM4XYjW>
 
@@ -83,6 +85,8 @@ subplots = [
 
 
 qbt.lib.plotting.mpf_plot(data, subplots=subplots)
+
+
 # |%%--%%| <IxcW591TUJ|Ufsl8mlq0u>
 
 import pandas as pd
@@ -138,3 +142,18 @@ UI_LOCATION = "./candles-ui/public"
 save_data(
     UI_LOCATION, df, indicators, indicators_data, st.bt.trade_module.closed_trades
 )
+
+
+# |%%--%%| <Ufsl8mlq0u|IwTnkvakS1>
+
+# Optimisation
+new_df = pd.DataFrame()
+for short in range(2, 50):
+    for long in range(21, 89):
+        st.from_signals((short, long))
+        stats = st.get_stats()
+        new_df = pd.concat([new_df, stats])
+print(new_df)
+
+sorted_optimisation = new_df.sort_values("ratio", ascending=False)
+print(sorted_optimisation)
