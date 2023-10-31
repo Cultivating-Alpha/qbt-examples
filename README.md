@@ -1,20 +1,22 @@
-# Installation
-Run the installation script: `./install.sh`
+# Requirements
+You need to have a valid python virtual environment manager. We recommend poetry which you can install from [here](https://python-poetry.org/docs/)
 
-The script does the following
+## Install the candles UI interface
+If you wish to visualize the candles at the end, in a our custom web interface, please do the following:
 
-1. Install the python dependencies using poetry
 ```bash
-poetry install 
-```
-
-2. Install the candles UI interface
-```bash
-git clone git@github.com:Cultivating-Alpha/candles-ui.git
+git clone https://github.com/Cultivating-Alpha/candles-ui.git
 cd candles-ui
 npm install
 ```
 
+# Setup
+##  Install the python dependencies using poetry
+```bash
+poetry install 
+```
+
+Alternatively, you can install the depencies using the supplied `requirements.txt` file.
 
 ## Run the jupyter notebook
 The notebook is located under `./src/main.ipynb`
