@@ -7,8 +7,9 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-quantbt = "^0.8.9"
+quantbt = "^0.8.11"
 quantstats = "^0.0.62"
+python-binance = "^1.0.19"
 
 
 [tool.poetry.group.dev.dependencies]
